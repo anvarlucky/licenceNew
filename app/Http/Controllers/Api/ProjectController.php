@@ -36,9 +36,9 @@ class ProjectController extends ForApiController
     {
         if($sum==null)
         {
-            return $this->responseSuccess(Project::select('*')->get());
+            return $this->responseSuccess(Project::orderBy('licence_number', 'DESC')->get());
         }
-        return $this->responseSuccess(Project::select('*')->paginate($sum));
+        return $this->responseSuccess(Project::orderBy('licence_number', 'DESC')->paginate($sum));
     }
 
     public function indexReyting(){
