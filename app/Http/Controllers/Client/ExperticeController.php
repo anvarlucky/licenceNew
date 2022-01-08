@@ -182,6 +182,9 @@ class ExperticeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $expertice = Expertice::destroy($id);
+        if ($expertice == true){
+            return redirect()->route('expertice.index');
+        }
     }
 }

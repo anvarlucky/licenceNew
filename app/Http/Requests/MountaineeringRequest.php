@@ -24,14 +24,12 @@ class MountaineeringRequest extends FormRequest
     public function rules()
     {
         return [
-            'type_of_activity1' => 'required',
             'licence_number' => 'required|unique:mountaineerings,licence_number',
             //'licence_number' => 'unique:projects,licence_number_new',
             'licence_given_date' => 'required',
             'organization_inn' => 'required',
             //'organization_name' => 'required|unique:projects,organization_name',
             //'organization_phone' => 'required|unique:projects,organization_phone',
-            'organization_account_number' => 'required',
             //'license_direction' => 'required'
         ];
     }

@@ -194,6 +194,9 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $project = Project::destroy($id);
+        if ($project == true){
+            return redirect()->route('projects.index');
+        }
     }
 }

@@ -42,7 +42,7 @@ class MountaineeringController extends Controller
      */
     public function index()
     {
-        $mauntaineeringes = Mountaineering::select('*')->orderBy('licence_given_date', 'desc')->get();
+        $mauntaineeringes = Mountaineering::select('*')->orderBy('licence_number', 'DESC')->get();
         return view('client.mauntaineering.index',[
             'mauntaineeringes' => $mauntaineeringes
         ]);
@@ -96,11 +96,7 @@ class MountaineeringController extends Controller
         $request1 = $request->except(['types','_token']);
         $mountaineering = Mountaineering::create($request1);
         if($mountaineering==true){
-            $mountaineering->types()->attach($request->types);
-            if($mountaineering==true)
                 return redirect()->route('mauntaineering.index');
-            else
-                return redirect()->back()->withErrors();
         }
     }
 
@@ -153,19 +149,11 @@ class MountaineeringController extends Controller
         $mauntaineering = Mountaineering::select('*')->find($id);
         $mauntaineering->licence_number = $request->licence_number;
         $mauntaineering->licence_given_date =$request->licence_given_date;
-        $mauntaineering->end_date = $request->end_date;
         $mauntaineering->organization_inn = $request->organization_inn;
         $mauntaineering->organization_name = $request->organization_name;
         $mauntaineering->organization_phone = $request->organization_phone;
-        $mauntaineering->organization_email = $request->organization_email;
-        $mauntaineering->region_id = $request->region_id;
-        $mauntaineering->district_id = $request->district_id;
-        $mauntaineering->organization_address = $request->organization_address;
-        $mauntaineering->organization_director = $request->organization_director;
-        $mauntaineering->organization_account_number = $request->organization_account_number;
-        $mauntaineering->difficulty_category = $request->difficulty_category;
         $mauntaineering->license_direction = $request->license_direction;
-        $mauntaineering->licence_number_new = $request->licence_number_new;
+        $mauntaineering->mid = $request->mid;
         $mauntaineering->save();
         if($mauntaineering == true)
         {

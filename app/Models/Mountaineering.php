@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Mountaineering extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     protected $guarded = [];
 
     public static function search($search)
@@ -15,6 +17,7 @@ class Mountaineering extends Model
         $certificate = Mountaineering::select('*')
             ->where('licence_number', 'like', '%'.$search.'%')
             ->orWhere('licence_number_new', 'like', '%'.$search.'%')
+            ->orWhere('organization_inn', 'like', '%'.$search.'%')
             ->get();
         return $certificate;
     }

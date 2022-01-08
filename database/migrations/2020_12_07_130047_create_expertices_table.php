@@ -33,6 +33,7 @@ class CreateExperticesTable extends Migration
             $table->string('difficulty_category');
             $table->text('license_direction');
             $table->integer('status')->default(1);
+            $table->integer('mid')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

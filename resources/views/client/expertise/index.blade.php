@@ -41,7 +41,7 @@
                         <th class="darkblue-color text-center text-nowrap align-top">Guvohnoma berilgan sana</th>
                         <th class="darkblue-color text-center text-nowrap align-top">Tashkilot nomi</th>
                         <th class="darkblue-color text-center text-nowrap align-top">Tashkilot INN</th>
-                        </th>
+                        <th class="darkblue-color text-center text-nowrap align-top"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -55,6 +55,13 @@
                             <td class="darkblue-color text-center text-nowrap align-middle">{{$expertice->licence_given_date}}</td>
                             <td class="darkblue-color text-center text-nowrap align-middle">{{$expertice->organization_name}}</td>
                             <td class="darkblue-color text-center text-nowrap align-middle">{{$expertice->organization_inn}}
+                            </td>
+                            <td>
+                                <form action="{{ route('expertice.destroy', $expertice->id)}}" method="post">
+                                    @method('DELETE')
+                                    @csrf
+                                    <input class="btn btn-outline-danger mr-3" type="submit" onclick="return confirm('Rostdan ham {{$expertice->licence_number}} o`chirmoqchimisiz?')" value="O`chirish" />
+                                </form>
                             </td>
                         </tr>
                     @endforeach

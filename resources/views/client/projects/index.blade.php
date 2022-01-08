@@ -43,6 +43,7 @@
                         <th class="darkblue-color text-center text-nowrap align-top">Tashkilot INN</th>
                         <th class="darkblue-color text-center align-top">Qiyinchilik kategoriyasi
                         </th>
+                        <th class="darkblue-color text-center align-top"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -57,6 +58,13 @@
                             <td class="darkblue-color text-center text-nowrap align-middle">{{$project->organization_name}}</td>
                             <td class="darkblue-color text-center text-nowrap align-middle">{{$project->organization_inn}}</td>
                             <td class="darkblue-color text-center text-nowrap align-middle">{{$project->difficulty_category}}
+                            </td>
+                            <td>
+                                <form action="{{ route('projects.destroy', $project->id)}}" method="post">
+                                    @method('DELETE')
+                                    @csrf
+                                    <input class="btn btn-outline-danger mr-3" type="submit" onclick="return confirm('Rostdan ham {{$project->licence_number}} o`chirmoqchimisiz?')" value="O`chirish" />
+                                </form>
                             </td>
                         </tr>
                     @endforeach
