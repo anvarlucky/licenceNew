@@ -32,6 +32,30 @@
                                     <li class="d-flex align-items-center justify-content-between">
                                         <div class="col-md-6">
                                             <p class="account-info-title">
+                                                Tashkilot STIR:
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="account-info-text">
+                                                {{$mauntaineering->organization_inn}}
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li class="d-flex align-items-center justify-content-between">
+                                        <div class="col-md-6">
+                                            <p class="account-info-title">
+                                                Tashkilot telefon raqami:
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="account-info-text">
+                                                <b>{{$mauntaineering->organization_phone}}</b>
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li class="d-flex align-items-center justify-content-between">
+                                        <div class="col-md-6">
+                                            <p class="account-info-title">
                                                 Litsenziya Berilgan sana:
                                             </p>
                                         </div>
@@ -53,53 +77,25 @@
                                             </p>
                                         </div>
                                     </li>
-                                    <li class="d-flex align-items-center justify-content-between">
-                                        <div class="col-md-6">
-                                            <p class="account-info-title">
-                                                Litsenziya amal qilish muddati:
-                                            </p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p class="account-info-text">
-                                                {{$mauntaineering->end_date}}
-                                                {{--{{\Carbon\Carbon::parse($student->starting_date)->format('d-m-Y')}}--}}
-                                            </p>
-                                        </div>
-                                    </li>
                                 </ul>
 
                                 <ul class="border-A5C9FF pt-4">
                                     <li class="d-flex align-items-center justify-content-between">
                                         <div class="col-md-6">
                                             <p class="account-info-title">
-                                                Tashkilot INN:
+                                                Ariza raqami:
                                             </p>
                                         </div>
                                         <div class="col-md-6">
                                             <p class="account-info-text">
-                                                {{$mauntaineering->organization_inn}}
+                                                {{$mauntaineering->mid}}
                                             </p>
                                         </div>
                                     </li>
                                     <li class="d-flex align-items-center justify-content-between">
                                         <div class="col-md-6">
                                             <p class="account-info-title">
-                                                Litsenziya yo'nalishi turi:
-                                            </p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            @foreach($mauntaineering->types as $type)
-                                                <p class="account-info-text"><b>
-                                                        {{$type->title}}
-                                                    </b>
-                                                </p>
-                                            @endforeach
-                                        </div>
-                                    </li>
-                                    <li class="d-flex align-items-center justify-content-between">
-                                        <div class="col-md-6">
-                                            <p class="account-info-title">
-                                               Izoh
+                                                Litsenziya yo'nalishlari
                                             </p>
                                         </div>
                                         <div class="col-md-6">
@@ -110,6 +106,9 @@
                                     </li>
                                 </ul>
                             </div>
+                        </div>
+                        <div class="col-md-2">
+
                         </div>
                     </div>
                 </div>

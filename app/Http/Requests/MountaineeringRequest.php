@@ -24,7 +24,7 @@ class MountaineeringRequest extends FormRequest
     public function rules()
     {
         return [
-            'licence_number' => 'required|unique:mountaineerings,licence_number',
+            'licence_number' => 'required',
             //'licence_number' => 'unique:projects,licence_number_new',
             'licence_given_date' => 'required',
             'organization_inn' => 'required',

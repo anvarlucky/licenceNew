@@ -15,7 +15,7 @@
                 @csrf
                 <div class="form-group">
                     <label for="">Litsenziya raqami</label>
-                    {{Form::text('licence_number', $mauntaineering->licence_number??'ҚВ-', ['class' => 'form-control','readonly'])}}
+                    {{Form::text('licence_number', $mauntaineering->licence_number??'ҚВ-', ['class' => 'form-control'])}}
                 </div>
                 <div class="form-group">
                     <label for="">Litsenziya berilgan sana</label>
@@ -23,7 +23,7 @@
                 </div>
                 <div class="form-group">
                     <label for="">Tashkilot INN</label>
-                    {{Form::text('organization_inn', $mauntaineering->organization_inn??null, ['class' => 'form-control','id'=>'tin','readonly'])}}
+                    {{Form::text('organization_inn', $mauntaineering->organization_inn??null, ['class' => 'form-control','id'=>'tin'])}}
                 </div>
                 <div class="form-group">
                     <label for="">Tashkilot nomi</label>

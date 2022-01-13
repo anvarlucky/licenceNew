@@ -19,6 +19,7 @@
     <label for="">Tashkilot telefon raqami</label>
     {{Form::text('organization_phone', $mauntaineering->organization_phone??null, ['class' => 'form-control','id'=>'phone'])}}
 </div>
+{{Form::hidden('organization_account_number', 'null')}}
 <div class="form-group">
     <label for="">Litsenziya yo'nalishlari</label>
     {{Form::textarea('license_direction', $mauntaineering->license_direction??null, ['class' => 'form-control'])}}
