@@ -32,6 +32,8 @@ class CreateProjectsTable extends Migration
             $table->string('organization_account_number');
             $table->string('difficulty_category');
             $table->text('license_direction');
+            $table->integer('acategory_id');
+            $table->foreign('acategory_id')->references('id')->on('acategories');
             $table->integer('status')->default(1);
             $table->integer('mid')->nullable();
             $table->timestamps();
