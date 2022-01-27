@@ -24,7 +24,7 @@ class ExpetiseRequest extends FormRequest
     public function rules()
     {
         return [
-            'licence_number' => 'required',
+            'licence_number' => 'required|unique:expertices,licence_number',
             //'licence_number' => 'unique:projects,licence_number_new',
             'licence_given_date' => 'required',
             'organization_inn' => 'required',

@@ -13,6 +13,7 @@ use App\Models\Type;
 use GuzzleHttp\Client;
 use App\Exports\LicencesExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
@@ -80,6 +81,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $acategories = DB::table('acategories')->get();
+        $bcategories = DB::table('bcategories')->get();
         $project12 = Project::latest()->first();
         $client = new Client(['base_uri' => 'http://talim.mc.uz']);
         $regions = $client->request('GET', 'api/reg');
@@ -93,7 +96,9 @@ class ProjectController extends Controller
             'project12' => $project12,
             'regions' => $regions->data,
             'districts' => $districts->data,
-            'types' => $types
+            'types' => $types,
+            'acategories' => $acategories,
+            'bcategories' => $bcategories
         ]);
     }
 
