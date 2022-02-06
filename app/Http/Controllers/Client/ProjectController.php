@@ -81,8 +81,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $acategories = DB::table('acategories')->get();
-        $bcategories = DB::table('bcategories')->get();
+        $categories = DB::table('categories')->get();
         $project12 = Project::latest()->first();
         $client = new Client(['base_uri' => 'http://talim.mc.uz']);
         $regions = $client->request('GET', 'api/reg');
@@ -97,8 +96,7 @@ class ProjectController extends Controller
             'regions' => $regions->data,
             'districts' => $districts->data,
             'types' => $types,
-            'acategories' => $acategories,
-            'bcategories' => $bcategories
+            'categories' => $categories,
         ]);
     }
 
@@ -110,23 +108,18 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
-        $request = $request->except('_token');
+        $request1 = $request->except(['categories','_token']);
         //dd($request);
-        $project = Project::create($request);
-        /*if($project && $request->type_id)
-        {
-            foreach($request->type_id as $typeId)
-            {
-                $projectType = new ProjectType();
-                $projectType->project_id = $project->id;
-                $projectType->type_id = $typeId;
-                $projectType->save();
-            }
-        }*/
+        $project = Project::create($request1);
+
         if($project==true)
-            return redirect()->route('projects.index');
-        else
-            return redirect()->back()->withErrors();
+        {
+            $project->categories()->attach($request->categories);
+                if($project==true)
+                    return redirect()->route('projects.index');
+                else
+                    return redirect()->back()->withErrors();
+        }
     }
 
     /**
@@ -151,6 +144,7 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
+        $categories = DB::table('categories')->get();
         $project = Project::select('*')->find($id);
         $client = new Client(['base_uri' => 'http://talim.mc.uz']);
         $regions = $client->request('GET', 'api/reg');
@@ -160,7 +154,8 @@ class ProjectController extends Controller
         return view('client.projects.edit', [
             'project' => $project,
             'regions' => $regions->data,
-            'districts' => $districts->data
+            'districts' => $districts->data,
+            'categories' => $categories
         ]);
     }
 
@@ -186,6 +181,7 @@ class ProjectController extends Controller
         $project->save();
         if($project == true)
         {
+            $project->categories()->sync($request->categories,false);
             return redirect()->route('projects.index');
         }
 

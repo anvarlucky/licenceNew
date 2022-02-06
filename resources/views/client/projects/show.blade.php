@@ -120,7 +120,9 @@
                                         </div>
                                         <div class="col-md-6">
                                             <p class="account-info-text">
-                                                {{$project->license_direction}}
+                                                @foreach($project->categories as $category)
+                                                <p>{{$category->title}}</p>
+                                                @endforeach
                                             </p>
                                         </div>
                                     </li>

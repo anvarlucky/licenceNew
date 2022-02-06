@@ -38,4 +38,8 @@ class Project extends Model
     {
         return self::all();
     }
+
+    public function categories(){
+        return $this->belongsToMany('App\Models\Category', 'projects_categories','project_id','category_id')->withTimestamps();
+    }
 }

@@ -29,22 +29,12 @@
 </div>
 <div class="form-group">
     <label for="">Litsenziya yo'nalishlari</label>
-    {{--{{Form::textarea('license_direction', $project->license_direction??null, ['class' => 'form-control'])}}--}}
+    {{Form::textarea('license_direction', $project->license_direction??null, ['class' => 'form-control'])}}
 </div>
 <div class="form-group">
-    <label for="">A guruh</label>
-    <br>
-@foreach($acategories as $acategory)
-
-        {{ Form::checkbox('license_direction[]', $acategory->id)}}<br>
-@endforeach
-</div>
-
-<div class="form-group">
-    <label for="">B guruh</label>
-    <br>
-    @foreach($bcategories as $bcategory)
-        {{ Form::checkbox('license_direction[]', $bcategory->id) }}<br>
+    <label><strong>Yo`nalishlar :</strong></label><br>
+    @foreach($categories as $category)
+    <label><input type="checkbox" name="categories[]" value="{{$category->id}}">{{$category->title}}</label><br/>
     @endforeach
 </div>
 
