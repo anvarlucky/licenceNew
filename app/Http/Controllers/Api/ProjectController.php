@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ForApiController;
 use App\Models\Expertice;
+use App\Models\Mountaineering;
 use App\Models\Project;
 use Hamcrest\Type\IsArray;
 use Illuminate\Http\Request;
@@ -56,13 +57,32 @@ class ProjectController extends ForApiController
     }
 
 
-    public function all($sum = null)
+    public function all($sum = null,$search = null)
     {
-        $expertice = Expertice::select('id', 'licence_number', 'organization_name', 'organization_inn', 'licence_given_date', 'difficulty_category')->orderBy('licence_number', 'DESC')->paginate($sum);
-        $projects = Project::select('id', 'licence_number', 'organization_inn', 'licence_given_date', 'difficulty_category')->orderBy('licence_number', 'DESC')->paginate($sum);
+        $expertice = Expertice::select('id', 'licence_number', 'organization_inn', 'licence_given_date', 'difficulty_category','organization_name','license_direction')
+            ->where('organization_inn', 'like', '%'.$search.'%')
+            ->orWhere('licence_number', 'like', '%'.$search.'%')
+            ->orWhere('organization_name', 'like', '%'.$search.'%')
+            ->orderBy('licence_number','DESC')
+            ->paginate($sum);
+        $projects = Project::select('id', 'licence_number', 'organization_inn', 'licence_given_date', 'difficulty_category','organization_name','license_direction')
+            ->where('organization_inn', 'like', '%'.$search.'%')
+            ->orWhere('licence_number', 'like', '%'.$search.'%')
+            ->orWhere('organization_name', 'like', '%'.$search.'%')
+            ->orderBy('licence_number','DESC')
+            ->paginate($sum);
+        $mounts = Mountaineering::select('id', 'licence_number', 'organization_inn', 'licence_given_date', 'difficulty_category','organization_name','license_direction')
+            ->where('organization_inn', 'like', '%'.$search.'%')
+            ->orWhere('licence_number', 'like', '%'.$search.'%')
+            ->orWhere('organization_name', 'like', '%'.$search.'%')
+            ->orderBy('licence_number','DESC')
+            ->paginate($sum);
         foreach ($projects as $key => $items) {
             if (isset($expertice[$key])) {
                 $projects[] = $expertice[$key];
+            }
+            if (isset($mounts[$key])){
+                $projects[] = $mounts[$key];
             }
         }
         return $this->responseSuccess($projects);

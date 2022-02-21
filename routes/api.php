@@ -27,7 +27,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::apiResource('/orgs',OrganizationController::class);
 Route::get('projects',[ProjectController::class,'index'])->name('projects');
 Route::get('projectsReyting',[ProjectController::class,'indexReyting'])->name('projectsReyting');
-Route::get('projectsAll/{sum?}',[ProjectController::class,'all'])->name('projectsAll');
+Route::get('projectsAll/{sum?}/{search?}',[ProjectController::class,'all'])->name('projectsAll');
 Route::post('projectsAll/{sum?}',[ProjectController::class,'all'])->name('projectsAll');
 Route::get('projects/{inn?}',[ProjectController::class,'index'])->name('projects');
 Route::post('projects/{inn?}',[ProjectController::class,'index'])->name('projects');
