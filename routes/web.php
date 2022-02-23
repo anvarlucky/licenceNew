@@ -30,6 +30,7 @@ Auth::routes(['register' => false]);
 Route::match(['get','post'],'dsq410',[DSQController::class,'mountaineering']);
 Route::match(['get','post'],'dsq381',[DSQController::class,'projects']);
 Route::match(['get','post'],'dsqOrgs',[DSQController::class,'organizations']);
+Route::get('projectsAll/send',[ProjectController::class,'allsend'])->name('ministry2222');
 Route::resource('/organizations',OrganizationController::class);
 Route::resource('projects', ProjectController::class)->middleware(['web', 'auth']);
 Route::get('projects.Inn',[ProjectController::class,'createNew'])->name('pra');

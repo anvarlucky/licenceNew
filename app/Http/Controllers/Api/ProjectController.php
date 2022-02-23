@@ -56,36 +56,125 @@ class ProjectController extends ForApiController
         }
     }
 
+    public function projects()
+    {
+        $client = new Client([
+            'headers' => ['Accept' => 'application/json', 'Content-Type' => 'application/json']
+        ]);
+        $project = Project::select('organization_name', 'organization_phone', 'organization_email', 'organization_inn', 'licence_number', 'licence_given_date', 'difficulty_category', 'license_direction')->take(5)->get();
+
+        foreach ($project as $project) {
+            $prr = $project->type_of_activity;
+            $m = $prr;
+            $phone = $project->phone_number;
+            dump($project->licence_number);
+            $response2 = $client->post('http://licence.loc/api/ministry2',
+                ['body' => json_encode([
+                    "organization_name" => $project->organization_name,
+                    "organization_phone" => $project->organization_phone,
+                    "organization_email" => $project->organization_email,
+                    "organization_inn" => $project->organization_inn,
+                    "licence_number" => $project->licence_number,
+                    "licence_given_date" => $project->licence_given_date,
+                    "difficulty_category" => $project->difficulty_category,
+                    "license_direction" => $project->license_direction,
+                ])
+                ]);
+            $answer = json_decode($response2->getBody());
+            if ($answer->success == true) {
+                dump($answer);
+                Project::where('id', $project->send_id)->update(['status_gnk' => 1]);
+            } else {
+                dd($answer);
+            }
+        }
+    }
+
+    public function allsend(){
+        $projects = Project::select('*')->take(10)->get();
+        foreach ($projects as $projectt){
+        DB::table('alllicences')->insert([
+        'organization_name' => $projectt['organization_name'],
+        'organization_phone'=> $projectt['organization_phone'],
+        'organization_email'=> $projectt['organization_email'],
+        'organization_inn'=> $projectt['organization_inn'],
+        'licence_number'=> $projectt['licence_number'],
+        'licence_given_date'=> $projectt['licence_given_date'],
+        'difficulty_category'=> $projectt['difficulty_category'],
+        'license_direction'=> $projectt['license_direction'],
+            ]);
+        }
+
+    }
+
 
     public function all($sum = null,$search = null)
     {
-        $expertice = Expertice::select('id', 'licence_number', 'organization_inn', 'licence_given_date', 'difficulty_category','organization_name','license_direction')
-            ->where('organization_inn', 'like', '%'.$search.'%')
-            ->orWhere('licence_number', 'like', '%'.$search.'%')
-            ->orWhere('organization_name', 'like', '%'.$search.'%')
-            ->orderBy('licence_number','DESC')
-            ->paginate($sum);
-        $projects = Project::select('id', 'licence_number', 'organization_inn', 'licence_given_date', 'difficulty_category','organization_name','license_direction')
-            ->where('organization_inn', 'like', '%'.$search.'%')
-            ->orWhere('licence_number', 'like', '%'.$search.'%')
-            ->orWhere('organization_name', 'like', '%'.$search.'%')
-            ->orderBy('licence_number','DESC')
-            ->paginate($sum);
-        $mounts = Mountaineering::select('id', 'licence_number', 'organization_inn', 'licence_given_date', 'difficulty_category','organization_name','license_direction')
-            ->where('organization_inn', 'like', '%'.$search.'%')
-            ->orWhere('licence_number', 'like', '%'.$search.'%')
-            ->orWhere('organization_name', 'like', '%'.$search.'%')
-            ->orderBy('licence_number','DESC')
-            ->paginate($sum);
-        foreach ($projects as $key => $items) {
-            if (isset($expertice[$key])) {
-                $projects[] = $expertice[$key];
+        /*if ($sum != null && $search == null){
+            $expertice = Expertice::select('id', 'licence_number', 'organization_inn', 'licence_given_date', 'difficulty_category','organization_name','license_direction')
+                ->paginate($sum);
+            $projects = Project::select('id', 'licence_number', 'organization_inn', 'licence_given_date', 'difficulty_category','organization_name','license_direction')
+                ->paginate($sum);
+            $mounts = Mountaineering::select('id', 'licence_number', 'organization_inn', 'licence_given_date', 'difficulty_category','organization_name','license_direction')
+                ->paginate($sum);
+            foreach ($projects as $key => $items) {
+                if (isset($expertice[$key])) {
+                    $projects[] = $expertice[$key];
+                }
+                if (isset($mounts[$key])){
+                    $projects[] = $mounts[$key];
+                }
             }
-            if (isset($mounts[$key])){
-                $projects[] = $mounts[$key];
-            }
+            return $this->responseSuccess($projects);
         }
-        return $this->responseSuccess($projects);
+        if (isset($search)){
+
+        $projects2 = Project::select('id', 'licence_number', 'organization_inn', 'licence_given_date', 'difficulty_category','organization_name','license_direction')
+            ->where('organization_inn', 'like', '%'.$search.'%')
+            ->orWhere('licence_number', 'like', '%'.$search.'%')
+            ->orWhere('organization_name', 'like', '%'.$search.'%')
+            ->orderBy('licence_number','DESC')
+            ->paginate($sum);
+            return $this->responseSuccess($projects2);
+        }
+
+        if(isset($search2)){
+            $expertice2 = Expertice::select('id', 'licence_number', 'organization_inn', 'licence_given_date', 'difficulty_category','organization_name','license_direction')
+                ->where('organization_inn', 'like', '%'.$search2.'%')
+                ->orWhere('licence_number', 'like', '%'.$search2.'%')
+                ->orWhere('organization_name', 'like', '%'.$search2.'%')
+                ->orderBy('licence_number','DESC')
+                ->paginate($sum);
+            return $this->responseSuccess($expertice2);
+        }*/
+
+
+
+        /*if (isset($search)){
+            $mounts2 = Mountaineering::select('id', 'licence_number', 'organization_inn', 'licence_given_date', 'difficulty_category','organization_name','license_direction')
+                ->where('organization_inn', 'like', '%'.$search.'%')
+                ->orWhere('licence_number', 'like', '%'.$search.'%')
+                ->orWhere('organization_name', 'like', '%'.$search.'%')
+                ->orderBy('licence_number','DESC')
+                ->paginate($sum);
+            return $this->responseSuccess($mounts2);
+        }*/
+
+        if ($sum != null && $search == null){
+            $expertice = DB::table('alllicences')->select('id', 'licence_number', 'organization_inn', 'licence_given_date', 'difficulty_category','organization_name','license_direction')
+                ->orderBy('licence_number')
+                ->paginate($sum);
+            return $this->responseSuccess($expertice);
+        }
+        if (isset($search)){
+            $expertice = DB::table('alllicences')->select('id', 'licence_number', 'organization_inn', 'licence_given_date', 'difficulty_category','organization_name','license_direction')
+                ->where('organization_inn', 'like', '%'.$search.'%')
+                ->orWhere('licence_number', 'like', '%'.$search.'%')
+                ->orWhere('organization_name', 'like', '%'.$search.'%')
+                ->paginate($sum);
+        }
+        return $this->responseSuccess($expertice);
+
     }
 
     public function indexReyting()

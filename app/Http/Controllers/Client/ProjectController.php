@@ -79,6 +79,25 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function allsend(){
+        $projects = Project::select('*')->take(10)->get();
+        foreach ($projects as $projectt){
+            DB::table('alllicences')->insert([
+                'organization_name' => $projectt['organization_name'],
+                'organization_phone'=> $projectt['organization_phone'],
+                'organization_email'=> $projectt['organization_email'],
+                'organization_inn'=> $projectt['organization_inn'],
+                'licence_number'=> $projectt['licence_number'],
+                'licence_given_date'=> $projectt['licence_given_date'],
+                'difficulty_category'=> $projectt['difficulty_category'],
+                'license_direction'=> $projectt['license_direction'],
+            ]);
+        }
+
+    }
+
+
     public function create()
     {
         $categories = DB::table('categories')->get();
