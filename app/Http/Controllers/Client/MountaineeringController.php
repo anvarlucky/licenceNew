@@ -95,6 +95,16 @@ class MountaineeringController extends Controller
     {
         $request1 = $request->except(['types','_token']);
         $mountaineering = Mountaineering::create($request1);
+        DB::table('alllicences')->insert([
+            'organization_name' => $request1['organization_name'],
+            'organization_phone'=> $request1['organization_phone'],
+            'organization_inn'=> $request1['organization_inn'],
+            'licence_number'=> $request1['licence_number'],
+            'licence_given_date'=> $request1['licence_given_date'],
+            'difficulty_category'=> $request1['difficulty_category'],
+            'license_direction'=> $request1['license_direction'],
+            'type' => 3
+        ]);
         if($mountaineering==true){
                 return redirect()->route('mauntaineering.index');
         }

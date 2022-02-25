@@ -91,6 +91,16 @@ class ExperticeController extends Controller
     {
         $request = $request->except('_token');
         $expertice = Expertice::create($request);
+        DB::table('alllicences')->insert([
+            'organization_name' => $request['organization_name'],
+            'organization_phone'=> $request['organization_phone'],
+            'organization_inn'=> $request['organization_inn'],
+            'licence_number'=> $request['licence_number'],
+            'licence_given_date'=> $request['licence_given_date'],
+            'difficulty_category'=> $request['difficulty_category'],
+            'license_direction'=> $request['license_direction'],
+            'type' => 2
+        ]);
         /*if($project && $request->type_id)
         {
             foreach($request->type_id as $typeId)

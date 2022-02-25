@@ -130,7 +130,16 @@ class ProjectController extends Controller
         $request1 = $request->except(['categories','_token']);
         //dd($request);
         $project = Project::create($request1);
-
+        DB::table('alllicences')->insert([
+            'organization_name' => $request['organization_name'],
+            'organization_phone'=> $request['organization_phone'],
+            'organization_inn'=> $request['organization_inn'],
+            'licence_number'=> $request['licence_number'],
+            'licence_given_date'=> $request['licence_given_date'],
+            'difficulty_category'=> $request['difficulty_category'],
+            'license_direction'=> $request['license_direction'],
+            'type' => 1
+        ]);
         if($project==true)
         {
             $project->categories()->attach($request->categories);
