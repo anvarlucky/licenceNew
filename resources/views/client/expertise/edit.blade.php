@@ -33,6 +33,10 @@
                     <label for="">Tashkilot telefon raqami</label>
                     {{Form::text('organization_phone', $expertice->organization_phone??null, ['class' => 'form-control','id'=>'phone'])}}
                 </div>
+                <div class="form-group">
+                    <label for="">Litsenziya yo'nalishlari</label>
+                    {{Form::textarea('license_direction', $expertice->license_direction??null, ['class' => 'form-control'])}}
+                </div>
                 {{Form::hidden('organization_account_number', 'null')}}
                 <div class="form-group">
                     <label for="">Ariza raqami</label>

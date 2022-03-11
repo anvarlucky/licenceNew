@@ -12,6 +12,7 @@ use App\Http\Requests\MountaineeringRequest;
 use GuzzleHttp\Client;
 use App\Exports\MountaineeringExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 
 class MountaineeringController extends Controller
 {
@@ -42,7 +43,7 @@ class MountaineeringController extends Controller
      */
     public function index()
     {
-        $mauntaineeringes = Mountaineering::select('*')->orderBy('licence_number', 'DESC')->get();
+        $mauntaineeringes = Mountaineering::select('*')->orderBy('licence_number', 'DESC')->get()->unique('licence_number');
         return view('client.mauntaineering.index',[
             'mauntaineeringes' => $mauntaineeringes
         ]);
@@ -101,7 +102,7 @@ class MountaineeringController extends Controller
             'organization_inn'=> $request1['organization_inn'],
             'licence_number'=> $request1['licence_number'],
             'licence_given_date'=> $request1['licence_given_date'],
-            'difficulty_category'=> $request1['difficulty_category'],
+            'end_date'=> $request1['end_date'],
             'license_direction'=> $request1['license_direction'],
             'type' => 3
         ]);
@@ -159,12 +160,25 @@ class MountaineeringController extends Controller
         $mauntaineering = Mountaineering::select('*')->find($id);
         $mauntaineering->licence_number = $request->licence_number;
         $mauntaineering->licence_given_date =$request->licence_given_date;
+        $mauntaineering->end_date =$request->end_date;
         $mauntaineering->organization_inn = $request->organization_inn;
         $mauntaineering->organization_name = $request->organization_name;
         $mauntaineering->organization_phone = $request->organization_phone;
         $mauntaineering->license_direction = $request->license_direction;
+        $mauntaineering->status = 2;
         $mauntaineering->mid = $request->mid;
         $mauntaineering->save();
+        $request1 = $request->except('_token');
+        DB::table('alllicences')->insert([
+            'organization_name' => $request1['organization_name'],
+            'organization_phone'=> $request1['organization_phone'],
+            'organization_inn'=> $request1['organization_inn'],
+            'licence_number'=> $request1['licence_number'],
+            'licence_given_date'=> $request1['licence_given_date'],
+            'license_direction'=> $request1['license_direction'],
+            'status' => 2,
+            'type' => 3
+        ]);
         if($mauntaineering == true)
         {
             return redirect()->route('mauntaineering.index');

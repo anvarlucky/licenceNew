@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App\Exports\ExperticesExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 
 class ExperticeController extends Controller
 {
@@ -97,7 +98,6 @@ class ExperticeController extends Controller
             'organization_inn'=> $request['organization_inn'],
             'licence_number'=> $request['licence_number'],
             'licence_given_date'=> $request['licence_given_date'],
-            'difficulty_category'=> $request['difficulty_category'],
             'license_direction'=> $request['license_direction'],
             'type' => 2
         ]);
@@ -177,7 +177,20 @@ class ExperticeController extends Controller
         $expertice->difficulty_category = $request->difficulty_category;
         $expertice->license_direction = $request->license_direction;
         $expertice->licence_number_new = $request->licence_number_new;
+        $expertice->status = 2;
+        $expertice->mid = $request->mid;
         $expertice->save();
+        $request = $request->except('_token');
+        DB::table('alllicences')->insert([
+            'organization_name' => $request['organization_name'],
+            'organization_phone'=> $request['organization_phone'],
+            'organization_inn'=> $request['organization_inn'],
+            'licence_number'=> $request['licence_number'],
+            'licence_given_date'=> $request['licence_given_date'],
+            //'difficulty_category'=> $request['difficulty_category'],
+            'license_direction'=> $request['license_direction'],
+            'type' => 2
+        ]);
         if($expertice == true)
         {
             return redirect()->route('expertice.index');

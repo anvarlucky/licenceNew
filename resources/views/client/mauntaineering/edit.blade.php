@@ -22,6 +22,10 @@
                     {{Form::date('licence_given_date', $mauntaineering->licence_given_date??null, ['class' => 'form-control'])}}
                 </div>
                 <div class="form-group">
+                    <label for="">Litsenziya tugash sanasi</label>
+                    {{Form::date('end_date', $mauntaineering->end_date??null, ['class' => 'form-control'])}}
+                </div>
+                <div class="form-group">
                     <label for="">Tashkilot INN</label>
                     {{Form::text('organization_inn', $mauntaineering->organization_inn??null, ['class' => 'form-control','id'=>'tin'])}}
                 </div>
@@ -34,6 +38,10 @@
                     {{Form::text('organization_phone', $mauntaineering->organization_phone??null, ['class' => 'form-control','id'=>'phone'])}}
                 </div>
                 {{Form::hidden('organization_account_number', 'null')}}
+                <div class="form-group">
+                    <label for="">Litsenziya yo'nalishlari</label>
+                    {{Form::textarea('license_direction', $mauntaineering->license_direction??null, ['class' => 'form-control'])}}
+                </div>
                 <div class="form-group">
                     <label for="">Ariza raqami</label>
                     {{Form::text('mid', $mauntaineering->mid??null, ['class' => 'form-control'])}}

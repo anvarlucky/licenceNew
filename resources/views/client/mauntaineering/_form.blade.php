@@ -6,7 +6,10 @@
     <label for="">Litsenziya berilgan sana</label>
     {{Form::date('licence_given_date', $mauntaineering->licence_given_date??null, ['class' => 'form-control'])}}
 </div>
-
+<div class="form-group">
+    <label for="">Litsenziya tugash sanasi</label>
+    {{Form::date('end_date', $mauntaineering->end_date??null, ['class' => 'form-control'])}}
+</div>
 <div class="form-group">
     <label for="">Tashkilot INN</label>
     {{Form::text('organization_inn', $mauntaineering->organization_inn??null, ['class' => 'form-control','id'=>'tin'])}}
