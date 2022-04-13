@@ -161,7 +161,8 @@ class ProjectController extends ForApiController
         }*/
 
         if ($sum != null && $search == null){
-            $expertice = DB::table('alllicences')->select('id', 'licence_number', 'organization_inn', 'licence_given_date', 'difficulty_category','organization_name','license_direction')
+            $expertice = DB::table('alllicences')->select('id', 'licence_number', 'organization_inn', 'licence_given_date', 'difficulty_category','organization_name','license_direction','statusmc')
+                ->where('deleted_at','=',null)
                 ->orderBy('licence_number')
                 ->paginate($sum);
             return $this->responseSuccess($expertice);
