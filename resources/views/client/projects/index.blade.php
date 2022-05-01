@@ -48,7 +48,8 @@
                     </thead>
                     <tbody>
                     @foreach($projects as $key => $project)
-                        <tr>
+
+                        <tr @if($project->statusmc != null)style="background:red;color:white;" @endif >
                             <th class="lightblue-color w-2 align-middle" scope="row">{{++$key}}</th>
                             <td class="darkblue-color d-flex align-items-center justify-content-end">
                                 <a href="{{route('projects.edit', $project->id)}}" class="btn btn-outline-primary mr-3 text-nowrap">O`zgartirish</a>

@@ -29,6 +29,7 @@ Route::get('projects',[ProjectController::class,'index'])->name('projects');
 Route::get('projectsReyting',[ProjectController::class,'indexReyting'])->name('projectsReyting');
 Route::get('projectsAll/{sum?}/{search?}',[ProjectController::class,'all'])->name('projectsAll');
 Route::get('projectsAll/send',[ProjectController::class,'allsend'])->name('ministry2222');
+Route::get('allprojects/{id?}',[ProjectController::class,'allprojects'])->name('allprojects');
 Route::post('projectsAlll',[ProjectController::class,'projects'])->name('projectss');
 Route::get('projects/{inn?}',[ProjectController::class,'index'])->name('projects');
 Route::post('projects/{inn?}',[ProjectController::class,'index'])->name('projects');

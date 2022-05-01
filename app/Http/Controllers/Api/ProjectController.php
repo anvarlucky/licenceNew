@@ -23,6 +23,10 @@ class ProjectController extends ForApiController
             'cause as license_edit_asos_date')->where('organization_inn', $inn)->paginate(10));
     }
 
+    public function allprojects($id = null){
+        return $this->responseSuccess(Project::select('*')->where('licence_number',$id)->get());
+    }
+
     public function index(Request $request)
     {
         $query = Project::select('id as send_id', 'organization_name as license_name', 'mid as ariza_number', 'organization_address as address', 'organization_phone as phone_number',
