@@ -120,9 +120,14 @@
                                         </div>
                                         <div class="col-md-6">
                                             <p class="account-info-text">
+
+                                            @if($project->categories != null)
                                                 @foreach($project->categories as $category)
-                                                <p>{{$category->title}}</p>
+                                                <p>{{$category->id}}-{{ $category->title}}</p>
                                                 @endforeach
+                                                @else
+                                                    {{$project->license_direction}}
+                                            @endif
                                             </p>
                                         </div>
                                     </li>

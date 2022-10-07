@@ -40,6 +40,6 @@ class Project extends Model
     }
 
     public function categories(){
-        return $this->belongsToMany('App\Models\Category', 'projects_categories','project_id','category_id')->withTimestamps();
+        return $this->belongsToMany('App\Models\Category', 'projects_categories','project_id','category_id')->withTimestamps()->withPivot('category_id');
     }
 }

@@ -3,11 +3,11 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="ab4a200a-3c95-471d-86c6-3e8119d76719" name="LIC" url="http://192.168.222.107">
-        <fileTransfer host="192.168.222.107" port="22" rootFolder="/var/www/vhosts/lic.mc.uz/httpdocs" accessType="SFTP">
+        <fileTransfer host="192.168.222.107" port="21" rootFolder="/httpdocs">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>
-          <option name="port" value="22" />
+          <option name="port" value="21" />
         </fileTransfer>
       </webServer>
     </option>

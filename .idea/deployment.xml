@@ -9,6 +9,13 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="MARKETPLACE">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="e.citynet.uz">
         <serverdata>
           <mappings>
@@ -24,13 +31,6 @@
         </serverdata>
       </paths>
       <paths name="food">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="s1.mc.uz">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />

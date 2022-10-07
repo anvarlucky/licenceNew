@@ -47,21 +47,14 @@
                     <label for="">Litsenziya yo'nalishlari</label>
                     {{Form::textarea('license_direction', $project->license_direction??null, ['class' => 'form-control'])}}
                 </div>
-                <div class="form-group">
+                <div class="form-check">
                     <label><strong>Yo`nalishlar :</strong></label><br>
-                    @foreach($project->categories as $category)
-                    {{dump($category->id)}}
-                    @endforeach
                     @foreach($categories as $category)
-                        @if($project->$categories == $category->id)
-                        <label><input type="checkbox" name="categories[]" value="{{$category->id}}" checked>{{$category->title}}</label><br/>
-                        @else
-                            <label><input type="checkbox" name="categories[]" value="{{$category->id}}">{{$category->title}}</label><br/>
-                        @endif
+                            <label class="form-check-label"><input class="form-check-input" id="flexCheckDefault" type="checkbox" name="categories[]" value="{{$category->id}}"@foreach($project->categories as $cat) @if($category->id==$cat->id) checked = 'checked' @endif @endforeach>{{$category->title}}</label><br/>
                     @endforeach
                 </div>
-
                 <div class="form-group">
+                    <br/>
                     <label for="">Ariza raqami</label>
                     {{Form::text('mid', $project->mid??null, ['class' => 'form-control'])}}
                 </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectRequest;
+use App\Models\Category;
 use App\Models\CreateLicenceForm;
 use App\Models\ProjectType;
 use Illuminate\Http\Request;
@@ -128,7 +129,7 @@ class ProjectController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProjectRequest $request)
     {
         $query = Project::select('*')->where('deleted_at', '!=', null)->get();
 
@@ -196,21 +197,23 @@ class ProjectController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public
-    function edit($id)
+    public function edit($id)
     {
-        $categories = DB::table('categories')->get();
+        //$categories = DB::table('categories')->get();
+        $categories = Category::all();
         $project = Project::select('*')->find($id);
         $client = new Client(['base_uri' => 'http://talim.mc.uz']);
         $regions = $client->request('GET', 'api/reg');
         $regions = json_decode($regions->getBody());
         $districts = $client->request('GET', 'api/dis');
         $districts = json_decode($districts->getBody());
+        $cat = $project->categories;
         return view('client.projects.edit', [
             'project' => $project,
             'regions' => $regions->data,
             'districts' => $districts->data,
-            'categories' => $categories
+            'categories' => $categories,
+            'cat' => $cat
         ]);
     }
 
@@ -221,19 +224,19 @@ class ProjectController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public
-    function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $project = Project::select('*')->find($id);
-        $project->licence_given_date = $request->licence_given_date;
-        $project->licence_number = $request->licence_number;
-        $project->organization_name = $request->organization_name;
-        $project->organization_inn = $request->organization_inn;
-        $project->organization_phone = $request->organization_phone;
-        $project->organization_email = $request->organization_email;
-        $project->difficulty_category = $request->difficulty_category;
-        $project->license_direction = $request->license_direction;
-        $project->mid = $request->mid;
+        $project->licence_given_date = $request['licence_given_date'];
+        $project->licence_number = $request['licence_number'];
+        $project->organization_name = $request['organization_name'];
+        $project->organization_inn = $request['organization_inn'];
+        $project->organization_phone = $request['organization_phone'];
+        $project->organization_email = $request['oganization_email'];
+        $project->difficulty_category = $request['difficulty_category'];
+        $project->license_direction = $request['license_direction'];
+        $project->mid = $request['mid'];
+        $project->statusedit = 1;
         $project->save();
         $request = $request->except('_token');
         DB::table('alllicences')->insert([
@@ -247,7 +250,8 @@ class ProjectController extends Controller
             'type' => 1
         ]);
         if ($project == true) {
-            $project->categories()->sync($request->categories, false);
+            //dd($request['categories']);
+            $project->categories()->sync($request['categories']);
             return redirect()->route('projects.index');
         }
 

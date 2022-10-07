@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Client\NewController;
 use App\Http\Controllers\Client\ProjectController;
 use App\Http\Controllers\Client\ExperticeController;
 use App\Http\Controllers\Client\client\OrganizationController;
@@ -47,4 +48,10 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'admin'], function (){
     Route::resource('announcements',AnnouncementController::class);
     Route::resource('shaffofprojects',ShaffofProjectController::class);
 });
+
+//NewController
+Route::get('newbus',[NewController::class,'newbus']);
+Route::post('newbus.search', [NewController::class,'search'])->name('newbus.search');
+Route::get('newlic',[NewController::class,'newlic']);
+Route::post('newlic.search', [NewController::class,'licsearch'])->name('newlic.search');
 Route::get('logout', [LoginController::class, 'logout']);

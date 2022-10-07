@@ -31,14 +31,15 @@
     <label for="">Litsenziya yo'nalishlari</label>
     {{Form::textarea('license_direction', $project->license_direction??null, ['class' => 'form-control'])}}
 </div>
-<div class="form-group">
+<div class="form-check">
     <label><strong>Yo`nalishlar :</strong></label><br>
     @foreach($categories as $category)
-    <label><input type="checkbox" name="categories[]" value="{{$category->id}}">{{$category->title}}</label><br/>
+    <label class="form-check-label"><input class="form-check-input" id="flexCheckDefault" type="checkbox" name="categories[]" value="{{$category->id}}">{{$category->title}}</label><br/>
     @endforeach
 </div>
 
 <div class="form-group">
+    <br/>
     <label for="">Ariza raqami</label>
     {{Form::text('mid', $project->mid??null, ['class' => 'form-control'])}}
 </div>

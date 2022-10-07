@@ -29,10 +29,12 @@ class ProjectRequest extends FormRequest
             'licence_given_date' => 'required',
             'organization_inn' => 'required',
             'mid' => 'unique:projects,mid',
+            'difficulty_category' => 'required',
             //'organization_name' => 'required|unique:projects,organization_name',
             //'organization_phone' => 'required|unique:projects,organization_phone',
             //'organization_account_number' => 'required|unique:projects,organization_account_number',
-            'license_direction' => 'required'
+            //'license_direction' => 'required'
+            'categories' => 'required:categories,id',
         ];
     }
 }
