@@ -54,4 +54,6 @@ Route::get('newbus',[NewController::class,'newbus']);
 Route::post('newbus.search', [NewController::class,'search'])->name('newbus.search');
 Route::get('newlic',[NewController::class,'newlic']);
 Route::post('newlic.search', [NewController::class,'licsearch'])->name('newlic.search');
+Route::get('newuniver',[NewController::class,'newuniver']);
+Route::post('newuniver.search', [NewController::class,'universearch'])->name('newuniver.search');
 Route::get('logout', [LoginController::class, 'logout']);

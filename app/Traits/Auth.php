@@ -37,6 +37,13 @@ trait Auth
         return $licence->json();
     }
 
+    public function getUnivercity($pinfl){
+        $univercity = Http::withToken($this->getToken())->post("https://apimgw.egov.uz:8243/minvuz/services/diploma/v2",[
+           'pinfl' => $pinfl
+        ]);
+        return $univercity->json();
+    }
+
     public function updateUser($user)
     {
         if ($user->name == null || $user->region == null || $user->district == null || $user->address == null) {

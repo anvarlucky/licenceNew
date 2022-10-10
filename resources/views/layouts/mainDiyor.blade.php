@@ -26,6 +26,7 @@
                 <a href="/" ><p class="darkblue-color font-weight-bold text-nowrap mb-0">Litsenziya Reestr Tizimi</p></a>
                 <a href="/newbus"><p class="darkblue-color font-weight-bold text-nowrap mb-0 ml-3"> Tadbirkorlik subyektlari</p></a>
                 <a href="/newlic"><p class="darkblue-color font-weight-bold text-nowrap mb-0 ml-3"> Litsenziyaga ega Tashkilotlar</p></a>
+                <a href="/newuniver"><p class="darkblue-color font-weight-bold text-nowrap mb-0 ml-3"> Oliy ma`lumot mavjudligi haqida...</p></a>
                 <div class="panel-top-items-box">
                     <img src="{{asset('/assets/diyor/images/notification-icon.svg')}}" alt="svg">
                     <div type="button" class="dropdown show user-cabinet dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown">

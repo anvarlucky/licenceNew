@@ -23,6 +23,11 @@ class NewController extends Controller
         return view('client.new.newlic',['licence' => $licence]);
     }
 
+    public function newuniver(){
+        $univer = null;
+        return view('client.new.newuniver',['univer' => $univer]);
+    }
+
     public function search(Request $request)
     {
         $search = $request->post('search');
@@ -35,6 +40,12 @@ class NewController extends Controller
         $licence = $this->getLicenceByInn($search);
         //dd($licence['data'][0]);
         return view('client.new.newlic', ['licence' => $licence['data'][0],'search' => $search]);
+    }
+
+    public function universearch(Request $request){
+        $search = $request->post('search');
+        $univer = $this->getUnivercity($search);
+        return view('client.new.newuniver',['univer' => $univer[0],'search' => $search]);
     }
 
     public function __invoke()
