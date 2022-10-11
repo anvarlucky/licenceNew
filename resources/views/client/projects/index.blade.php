@@ -39,6 +39,7 @@
                         <th class="darkblue-color text-center text-nowrap align-top"></th>
                         <th class="darkblue-color text-center text-nowrap align-top">Litsenziya raqami</th>
                         <th class="darkblue-color text-center text-nowrap align-top">Litsenziya berilgan sana</th>
+                        <th class="darkblue-color text-center text-nowrap align-top"></th>
                         <th class="darkblue-color text-center text-nowrap align-top">Tashkilot nomi</th>
                         <th class="darkblue-color text-center text-nowrap align-top">Tashkilot INN</th>
                         <th class="darkblue-color text-center align-top">Qiyinchilik kategoriyasi
@@ -62,6 +63,13 @@
                             </td>
                             <td class="darkblue-color text-center text-nowrap align-middle"><a href="{{route('projects.show',$project->id)}}">{{$project->licence_number}}</a></td>
                             <td class="darkblue-color text-center text-nowrap align-middle">{{$project->licence_given_date}}</td>
+                                @if($project->statusmc == '')
+                                    <td class="darkblue-color d-flex align-items-center justify-content-end">
+                                        <a href="{{route('decisionget', $project->id)}}" class="btn btn-outline-danger mr-3 text-nowrap">Vaqtincha To`xtatish</a>
+                                    </td>
+                                    @else
+                                    <td class="darkblue-color text-center text-nowrap align-middle"></td>
+                                @endif
                             <td class="darkblue-color text-center text-nowrap align-middle">{{$project->organization_name}}</td>
                             <td class="darkblue-color text-center text-nowrap align-middle">{{$project->organization_inn}}</td>
                             <td class="darkblue-color text-center text-nowrap align-middle">{{$project->difficulty_category}}

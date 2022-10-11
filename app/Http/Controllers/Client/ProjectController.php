@@ -50,6 +50,14 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::orderBy('licence_number', 'DESC')->get();
+        foreach ($projects as $project){
+            $today = date('Y-m-d');
+            //dd($today);
+            if($project->decision_end_date == $today) {
+                $project->statusmc = null;
+                $project->save();
+            }
+        }
         $client = new Client(['base_uri' => 'http://talim.mc.uz']);
         $region = $client->request('GET', 'api/reg/');
         $region = json_decode($region->getBody());
@@ -238,7 +246,7 @@ class ProjectController extends Controller
         $project->mid = $request['mid'];
         $project->statusedit = 1;
         $project->save();
-        $request = $request->except('_token');
+        /*$request = $request->except('_token');
         DB::table('alllicences')->insert([
             'organization_name' => $request['organization_name'],
             'organization_phone' => $request['organization_phone'],
@@ -248,7 +256,7 @@ class ProjectController extends Controller
             'difficulty_category' => $request['difficulty_category'],
             'license_direction' => $request['license_direction'],
             'type' => 1
-        ]);
+        ]);*/
         if ($project == true) {
             //dd($request['categories']);
             $project->categories()->sync($request['categories']);
@@ -263,8 +271,27 @@ class ProjectController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public
-    function destroy($id)
+    //Vazir qarori
+
+    public function decisionget($id){
+        $project = Project::select('*')->find($id);
+        return view('client.projects.decision',['project' => $project]);
+    }
+
+    public function decision(Request $request, $id){
+        //dd($request);
+        $project = Project::select('*')->find($id);
+        $project->decision_start_date = $request['decision_start_date'];
+        $project->decision_end_date = $request['decision_end_date'];
+        $project->statusmc = 1;
+        $project->save();
+        if ($project == true) {
+
+            return redirect()->route('projects.index');
+        }
+
+    }
+    public function destroy($id)
     {
         $project = Project::destroy($id);
         if ($project == true) {
