@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ExDecisionRequest;
 use App\Models\Expertice;
 use App\Models\Region;
 use App\Models\District;
@@ -12,6 +13,8 @@ use GuzzleHttp\Client;
 use App\Exports\ExperticesExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class ExperticeController extends Controller
 {
@@ -43,6 +46,17 @@ class ExperticeController extends Controller
     public function index()
     {
         $expertices = Expertice::orderBy('licence_number', 'DESC')->get();
+
+
+        $today = date('d');
+        foreach ($expertices as $expertice) {
+            $start_day = Carbon::parse($expertice->decision_start_date)->format('d');
+            if ($today - $start_day >= 10) {
+                $expertice->statusmc = null;
+                $expertice->save();
+            }
+        }
+
         return view('client.expertise.index',[
             'expertices' => $expertices
         ]);
@@ -180,7 +194,7 @@ class ExperticeController extends Controller
         $expertice->status = 2;
         $expertice->mid = $request->mid;
         $expertice->save();
-        $request = $request->except('_token');
+        /*$request = $request->except('_token');
         DB::table('alllicences')->insert([
             'organization_name' => $request['organization_name'],
             'organization_phone'=> $request['organization_phone'],
@@ -190,11 +204,42 @@ class ExperticeController extends Controller
             //'difficulty_category'=> $request['difficulty_category'],
             'license_direction'=> $request['license_direction'],
             'type' => 2
-        ]);
+        ]);*/
         if($expertice == true)
         {
             return redirect()->route('expertice.index');
         }
+    }
+
+
+    //Vazir Buyrug`i
+
+    public function decisionget($id){
+        $expertice = Expertice::select('*')->find($id);
+        return view('client.expertise.decision',['expertice' => $expertice]);
+    }
+
+    public function decision(ExDecisionRequest $request, $id){
+        //dd($request);
+        $validator = Validator::make($request->all(), [
+            'decision_start_date' => 'required',
+            'decision_number' => 'required',
+        ]);
+        $expertice = Expertice::select('*')->find($id);
+        $expertice->decision_start_date = $request['decision_start_date'];
+        $expertice->decision_number = $request['decision_number'];
+        $expertice->statusmc = 1;
+        $expertice->save();
+        /*if ($validator->fails()) {
+            return redirect('decision1get/'.$id)
+                ->withErrors($validator)
+                ->withInput();
+        }*/
+        if ($expertice == true) {
+
+            return redirect()->route('expertice.index');
+        }
+
     }
 
     /**

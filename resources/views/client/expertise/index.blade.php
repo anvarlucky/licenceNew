@@ -39,6 +39,7 @@
                         <th class="darkblue-color text-center text-nowrap align-top"></th>
                         <th class="darkblue-color text-center text-nowrap align-top">Guvohnoma raqami</th>
                         <th class="darkblue-color text-center text-nowrap align-top">Guvohnoma berilgan sana</th>
+                        <th class="darkblue-color text-center text-nowrap align-top"></th>
                         <th class="darkblue-color text-center text-nowrap align-top">Tashkilot nomi</th>
                         <th class="darkblue-color text-center text-nowrap align-top">Tashkilot INN</th>
                         <th class="darkblue-color text-center text-nowrap align-top"></th>
@@ -46,13 +47,24 @@
                     </thead>
                     <tbody>
                     @foreach($expertices as $key => $expertice)
-                        <tr>
-                            <th class="lightblue-color w-2 align-middle" scope="row">{{++$key}}</th>
+                        <tr @if($expertice->statusmc != null)style="background:red;color:white;" @endif >
+                        @if($expertice->statusedit == 1)
+                                <th class="lightblue-color w-2 align-middle" scope="row">{{++$key}}+</th>
+                            @else
+                                <th class="lightblue-color w-2 align-middle" scope="row">{{++$key}}</th>
+                        @endif
                             <td class="darkblue-color d-flex align-items-center justify-content-end">
                                 <a href="{{route('expertice.edit', $expertice->id)}}" class="btn btn-outline-primary mr-3 text-nowrap">O`zgartirish</a>
                             </td>
                             <td class="darkblue-color text-center text-nowrap align-middle"><a href="{{route('expertice.show',$expertice->id)}}">{{$expertice->licence_number}}</a></td>
                             <td class="darkblue-color text-center text-nowrap align-middle">{{$expertice->licence_given_date}}</td>
+                            @if($expertice->statusmc == '')
+                                <td class="darkblue-color d-flex align-items-center justify-content-end">
+                                    <a href="{{route('decision1get', $expertice->id)}}" class="btn btn-outline-danger mr-3 text-nowrap">Vaqtincha To`xtatish</a>
+                                </td>
+                            @else
+                                <td class="darkblue-color text-center text-nowrap align-middle">Buyruq №{{$expertice->decision_number}}</td>
+                            @endif
                             <td class="darkblue-color text-center text-nowrap align-middle">{{$expertice->organization_name}}</td>
                             <td class="darkblue-color text-center text-nowrap align-middle">{{$expertice->organization_inn}}
                             </td>

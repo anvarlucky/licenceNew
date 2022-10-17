@@ -14,11 +14,11 @@
     {{Form::open(['route' => ['decision',$project->id],'method' => 'put'])}}
     @csrf
         <div class="form-group">
-            <label for="">Qaror chiqqan sana</label>
+            <label for="">Buyruq chiqqan sana</label>
             {{Form::date('decision_start_date', $project->decision_start_date??null, ['class' => 'form-control'])}}
         </div><div class="form-group">
-            <label for="">Qaror tugash vaqti</label>
-            {{Form::date('decision_end_date', $project->decision_end_date??null, ['class' => 'form-control'])}}
+            <label for="">Buyruq raqami</label>
+            {{Form::text('decision_number', $project->decision_number??null, ['class' => 'form-control'])}}
         </div>
         <div class="form-group">
             {{Form::submit(('Saqlash'), ['class' => 'btn btn-primary'])}}

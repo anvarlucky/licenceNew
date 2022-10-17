@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PrDecisionRequest;
 use App\Http\Requests\ProjectRequest;
 use App\Models\Category;
 use App\Models\CreateLicenceForm;
 use App\Models\ProjectType;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\Project;
@@ -17,6 +19,7 @@ use GuzzleHttp\Client;
 use App\Exports\LicencesExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ProjectController extends Controller
 {
@@ -50,13 +53,14 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::orderBy('licence_number', 'DESC')->get();
+        $today = date('d');
         foreach ($projects as $project){
-            $today = date('Y-m-d');
-            //dd($today);
-            if($project->decision_end_date == $today) {
+            $start_day = Carbon::parse($project->decision_start_date)->format('d');
+            if ($today-$start_day >= 10){
                 $project->statusmc = null;
                 $project->save();
             }
+
         }
         $client = new Client(['base_uri' => 'http://talim.mc.uz']);
         $region = $client->request('GET', 'api/reg/');
@@ -271,20 +275,29 @@ class ProjectController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    //Vazir qarori
+    //Vazir Buyrug`i
 
     public function decisionget($id){
         $project = Project::select('*')->find($id);
         return view('client.projects.decision',['project' => $project]);
     }
 
-    public function decision(Request $request, $id){
+    public function decision(PrDecisionRequest $request, $id){
         //dd($request);
+        $validator = Validator::make($request->all(), [
+            'decision_start_date' => 'required',
+            'decision_number' => 'required',
+        ]);
         $project = Project::select('*')->find($id);
         $project->decision_start_date = $request['decision_start_date'];
-        $project->decision_end_date = $request['decision_end_date'];
+        $project->decision_number = $request['decision_number'];
         $project->statusmc = 1;
         $project->save();
+        /*if ($validator->fails()) {
+            return redirect('decisionget/'.$id)
+                ->withErrors($validator)
+                ->withInput();
+        }*/
         if ($project == true) {
 
             return redirect()->route('projects.index');

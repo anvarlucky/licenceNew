@@ -68,7 +68,7 @@
                                         <a href="{{route('decisionget', $project->id)}}" class="btn btn-outline-danger mr-3 text-nowrap">Vaqtincha To`xtatish</a>
                                     </td>
                                     @else
-                                    <td class="darkblue-color text-center text-nowrap align-middle"></td>
+                                    <td class="darkblue-color text-center text-nowrap align-middle">Buyruq №{{$project->decision_number}}</td>
                                 @endif
                             <td class="darkblue-color text-center text-nowrap align-middle">{{$project->organization_name}}</td>
                             <td class="darkblue-color text-center text-nowrap align-middle">{{$project->organization_inn}}</td>

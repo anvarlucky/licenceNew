@@ -34,9 +34,14 @@ Route::match(['get','post'],'dsqOrgs',[DSQController::class,'organizations']);
 Route::get('projectsAll/send',[ProjectController::class,'allsend'])->name('ministry2222');
 Route::resource('/organizations',OrganizationController::class);
 Route::resource('projects', ProjectController::class)->middleware(['web', 'auth']);
-//Vazirlik qaror
+//Vazirlik Buyrug`i Projects
 Route::get('decisionget/{id}', [ProjectController::class,'decisionget'])->name('decisionget')->middleware(['web', 'auth']);
 Route::put('decision/{id}', [ProjectController::class,'decision'])->name('decision')->middleware(['web', 'auth']);
+//
+
+//Vazirlik Buyrug`i Expertices
+Route::get('decision1get/{id}', [ExperticeController::class,'decisionget'])->name('decision1get')->middleware(['web', 'auth']);
+Route::put('decision1/{id}', [ExperticeController::class,'decision'])->name('decision1')->middleware(['web', 'auth']);
 //
 Route::get('projects.Inn',[ProjectController::class,'createNew'])->name('pra');
 Route::get('projects.excel', [ProjectController::class,'export'])->name('export1');
