@@ -49,7 +49,9 @@
                     </thead>
                     @if($licence != null)
                         <tbody>
-
+                        @if(isset($licence['message']))
+                            {{"Bu INN bo'yicha hechnima topilmadi"}}
+                        @else
 
                         <tr >
 
@@ -69,7 +71,7 @@
                             <td class="darkblue-color text-center text-nowrap align-middle">-
                             </td>
                         </tr>
-
+                        @endif
                         </tbody>
                     @else
                         Ma`lumot yo`q

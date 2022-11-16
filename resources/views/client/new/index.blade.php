@@ -49,7 +49,9 @@
                     </thead>
                     @if($product != null)
                     <tbody>
-
+                    @if(isset($product['message']))
+                        {{"Bu INN bo'yicha hechnima topilmadi"}}
+                    @else
 
                         <tr >
 
@@ -69,7 +71,7 @@
                             <td class="darkblue-color text-center text-nowrap align-middle">{{$product['home_address']}}
                             </td>
                         </tr>
-
+                    @endif
                     </tbody>
                     @else
                         Ma`lumot yo`q

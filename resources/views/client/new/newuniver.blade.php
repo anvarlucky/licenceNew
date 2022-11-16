@@ -49,16 +49,12 @@
                     </thead>
                     @if($univer != null)
                         <tbody>
-
-
-                        <tr >
-
+                        @if(isset($univer['message']))
+                            {{$univer['message']}}
+                            @else
+                        <tr>
                             <th class="lightblue-color w-2 align-middle" scope="row"></th>
-
-
-
                             <td class="darkblue-color d-flex align-items-center justify-content-end">
-
                             </td>
                             <td class="darkblue-color text-center text-nowrap align-middle">{{$univer['pinfl']}}</td>
                             <td class="darkblue-color text-center text-nowrap align-middle">{{$univer['edu_type_name']}}</td>
@@ -69,7 +65,7 @@
                             <td class="darkblue-color text-center text-nowrap align-middle">{{$univer['diploma_given_date']}}
                             </td>
                         </tr>
-
+                        @endif
                         </tbody>
                     @else
                         Ma`lumot yo`q

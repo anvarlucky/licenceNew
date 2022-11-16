@@ -9,9 +9,6 @@ use App\Traits\Auth;
 class NewController extends Controller
 {
     use Auth;
-    public function index(){
-        //dd(Auth::getCompanyDataByInn);
-    }
 
     public function newbus(){
         $product = null;
@@ -38,23 +35,23 @@ class NewController extends Controller
     public function licsearch(Request $request){
         $search = $request->post('search');
         $licence = $this->getLicenceByInn($search);
-        //dd($licence['data'][0]);
-        return view('client.new.newlic', ['licence' => $licence['data'][0],'search' => $search]);
+        if(isset($licence['data'][0])) {
+            return view('client.new.newlic', ['licence' => $licence['data'][0], 'search' => $search]);
+        }
+        else{
+            return view('client.new.newlic', ['licence' => $licence, 'search' => $search]);
+        }
     }
 
     public function universearch(Request $request){
         $search = $request->post('search');
         $univer = $this->getUnivercity($search);
-        return view('client.new.newuniver',['univer' => $univer[0],'search' => $search]);
+        if (isset($univer[0])) {
+            return view('client.new.newuniver', ['univer' => $univer[0], 'search' => $search]);
+        }
+        else{
+            return view('client.new.newuniver', ['univer' => $univer, 'search' => $search]);
+        }
     }
 
-    public function __invoke()
-    {
-        $product = $this->getCompanyDataByInn('302964974');
-        $lic = $this->getLicenceByInn('309636474');
-        dd($lic);
-        dd(Auth::class);
-        dd(Auth::getCompanyDataByInn);
-        dd('main');
-    }
 }
